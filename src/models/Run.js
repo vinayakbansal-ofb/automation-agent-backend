@@ -1,52 +1,39 @@
 import mongoose from 'mongoose';
 
-const RunSchema = new mongoose.Schema(
+const runSchema = new mongoose.Schema(
   {
     flowId: {
       type: mongoose.Schema.Types.ObjectId,
+      required: true,
       ref: 'Flow',
-      required: true
     },
-
     flowName: {
       type: String,
-      required: true
+      required: true,
     },
-
     status: {
       type: String,
-      enum: ['PASSED', 'FAILED'],
-      required: true
+      enum: ['RUNNING', 'PASSED', 'FAILED', 'ABORTED'], // ✅ FIX
+      required: true,
     },
-
     startedAt: {
       type: Date,
-      required: true
+      default: Date.now,
     },
-
-    finishedAt: {
-      type: Date
+    endedAt: {
+      type: Date,
     },
-
-    failedStepIndex: {
-      type: Number
+    summary: {
+      totalSteps: Number,
+      passedSteps: Number,
+      failedSteps: Number,
     },
-
-    failureReason: {
-      type: String
+    logs: {
+      type: Array,
+      default: [],
     },
-
-    logs: [
-      {
-        time: String,
-        type: String,   // info | success | error
-        message: String
-      }
-    ]
   },
-  {
-    timestamps: true
-  }
+  { timestamps: true }
 );
 
-export default mongoose.model('Run', RunSchema);
+export default mongoose.model('Run', runSchema);
