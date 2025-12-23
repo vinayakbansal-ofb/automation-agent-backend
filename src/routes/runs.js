@@ -49,4 +49,23 @@ router.post('/:runId/finish', async (req, res) => {
   }
 });
 
+// GET run history for a flow
+router.get('/', async (req, res) => {
+  try {
+    const { flowId } = req.query;
+
+    if (!flowId) {
+      return res.status(400).json({ error: 'flowId is required' });
+    }
+
+    const runs = await Run.find({ flowId })
+      .sort({ createdAt: -1 })
+      .limit(50); // safety cap
+
+    res.json(runs);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 export default router;
