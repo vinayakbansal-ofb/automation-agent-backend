@@ -13,7 +13,7 @@ router.post('/start', async (req, res) => {
     const run = await Run.create({
         flowId,
         flowName,
-        status: 'RUNNING',   // ✅ always RUNNING
+        status: 'RUNNING',   
         startedAt: new Date(),
         logs: [],
       });

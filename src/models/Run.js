@@ -32,6 +32,10 @@ const runSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    variables: {
+      type: Object,
+      default: {}
+    },
   },
   { timestamps: true }
 );
