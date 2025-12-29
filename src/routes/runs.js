@@ -29,7 +29,7 @@ router.post('/start', async (req, res) => {
  */
 router.post('/:runId/finish', async (req, res) => {
   try {
-    const { status, failedStepIndex, failureReason, logs } = req.body;
+    const { status, failedStepIndex, failureReason, logs, variables } = req.body;
 
     const run = await Run.findByIdAndUpdate(
       req.params.runId,
@@ -38,6 +38,7 @@ router.post('/:runId/finish', async (req, res) => {
         failedStepIndex,
         failureReason,
         logs,
+        variables: variables || {},
         finishedAt: new Date()
       },
       { new: true }
